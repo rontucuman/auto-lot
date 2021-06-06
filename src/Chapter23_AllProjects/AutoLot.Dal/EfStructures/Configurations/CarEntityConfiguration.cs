@@ -24,6 +24,11 @@ namespace AutoLot.Dal.EfStructures.Configurations
         .HasMaxLength(50)
         .IsUnicode(false);
 
+      builder.HasQueryFilter(e => e.IsDrivable);
+      builder.Property(e => e.IsDrivable)
+        .HasField("_isDrivable")
+        .HasDefaultValue(true);
+
       builder.HasOne(d => d.MakeNavigation)
         .WithMany(p => p.Cars)
         .HasForeignKey(d => d.MakeId)
