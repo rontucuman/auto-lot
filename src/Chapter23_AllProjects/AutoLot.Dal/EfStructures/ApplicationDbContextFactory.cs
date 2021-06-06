@@ -8,7 +8,7 @@ namespace AutoLot.Dal.EfStructures
     public ApplicationDbContext CreateDbContext(string[] args)
     {
       var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-      string connectionString = @"Data Source=(localdb)\\mssqllocaldb;Integrated Security=true; Initial Catalog=AutoLot";
+      string connectionString = @"Data Source=(localdb)\mssqllocaldb;Integrated Security=true; Initial Catalog=AutoLot";
 
       optionsBuilder.UseSqlServer(connectionString);
 
