@@ -49,31 +49,14 @@ namespace AutoLot.Dal.EfStructures
                     .IsRowVersion()
                     .IsConcurrencyToken();
 
-                entity.HasOne(d => d.Customer)
+                entity.HasOne(d => d.CustomerNavigation)
                     .WithMany(p => p.CreditRisks)
                     .HasForeignKey(d => d.CustomerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Customer_CreditRisk");
             });
 
-            modelBuilder.Entity<Customer>(entity =>
-            {
-                entity.ToTable("Customer");
-
-                entity.Property(e => e.FirstName)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.LastName)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TimeStamp)
-                    .IsRowVersion()
-                    .IsConcurrencyToken();
-            });
+            new CustomerEntityConfiguration().Configure(modelBuilder.Entity<Customer>());
 
             new CarEntityConfiguration().Configure(modelBuilder.Entity<Car>());
 
@@ -109,7 +92,7 @@ namespace AutoLot.Dal.EfStructures
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Inventory_Order");
 
-                entity.HasOne(d => d.Customer)
+                entity.HasOne(d => d.CustomerNavigation)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.CustomerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)

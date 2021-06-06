@@ -1,24 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-
-#nullable disable
+﻿using System.Collections.Generic;
+using AutoLot.Model.Entities.Base;
+using AutoLot.Model.Entities.Owned;
 
 namespace AutoLot.Model.Entities
 {
-    public partial class Customer
-    {
-        public Customer()
-        {
-            CreditRisks = new HashSet<CreditRisk>();
-            Orders = new HashSet<Order>();
-        }
+  public partial class Customer : BaseEntity
+  {
+    public Person PersonalInformation { get; set; } = new Person();
 
-        public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public byte[] TimeStamp { get; set; }
-
-        public virtual ICollection<CreditRisk> CreditRisks { get; set; }
-        public virtual ICollection<Order> Orders { get; set; }
-    }
+    public IEnumerable<CreditRisk> CreditRisks { get; set; } = new List<CreditRisk>();
+    public IEnumerable<Order> Orders { get; set; } = new List<Order>();
+  }
 }

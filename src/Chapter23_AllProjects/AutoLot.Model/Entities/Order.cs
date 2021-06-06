@@ -13,6 +13,6 @@ namespace AutoLot.Model.Entities
         public byte[] TimeStamp { get; set; }
 
         public virtual Car CarNavigation { get; set; }
-        public virtual Customer Customer { get; set; }
+        public virtual Customer CustomerNavigation { get; set; }
     }
 }
