@@ -12,7 +12,7 @@ namespace AutoLot.Model.Entities
         public int CustomerId { get; set; }
         public byte[] TimeStamp { get; set; }
 
-        public virtual Inventory Car { get; set; }
+        public virtual Car CarNavigation { get; set; }
         public virtual Customer Customer { get; set; }
     }
 }

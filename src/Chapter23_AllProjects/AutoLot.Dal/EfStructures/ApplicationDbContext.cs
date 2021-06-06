@@ -1,4 +1,5 @@
 ﻿using System;
+using AutoLot.Dal.EfStructures.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using AutoLot.Model.Entities;
@@ -20,7 +21,7 @@ namespace AutoLot.Dal.EfStructures
 
         public virtual DbSet<CreditRisk> CreditRisks { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
-        public virtual DbSet<Inventory> Inventories { get; set; }
+        public virtual DbSet<Car> Inventories { get; set; }
         public virtual DbSet<Make> Makes { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
 
@@ -74,32 +75,7 @@ namespace AutoLot.Dal.EfStructures
                     .IsConcurrencyToken();
             });
 
-            modelBuilder.Entity<Inventory>(entity =>
-            {
-                entity.ToTable("Inventory");
-
-                entity.HasIndex(e => e.MakeId, "IX_FK_Make_Inventory");
-
-                entity.Property(e => e.Color)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.PetName)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TimeStamp)
-                    .IsRowVersion()
-                    .IsConcurrencyToken();
-
-                entity.HasOne(d => d.Make)
-                    .WithMany(p => p.Inventories)
-                    .HasForeignKey(d => d.MakeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Make_Inventory");
-            });
+            new CarEntityConfiguration().Configure(modelBuilder.Entity<Car>());
 
             modelBuilder.Entity<Make>(entity =>
             {
@@ -127,7 +103,7 @@ namespace AutoLot.Dal.EfStructures
                     .IsRowVersion()
                     .IsConcurrencyToken();
 
-                entity.HasOne(d => d.Car)
+                entity.HasOne(d => d.CarNavigation)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.CarId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
