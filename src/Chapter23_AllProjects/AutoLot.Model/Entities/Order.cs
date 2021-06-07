@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-
-#nullable disable
+using AutoLot.Model.Entities.Base;
 
 namespace AutoLot.Model.Entities
 {
-    public partial class Order
+    public partial class Order : BaseEntity
     {
-        public int Id { get; set; }
         public int CarId { get; set; }
         public int CustomerId { get; set; }
-        public byte[] TimeStamp { get; set; }
 
-        public virtual Car CarNavigation { get; set; }
-        public virtual Customer CustomerNavigation { get; set; }
+        public Car? CarNavigation { get; set; }
+        public Customer? CustomerNavigation { get; set; }
     }
 }

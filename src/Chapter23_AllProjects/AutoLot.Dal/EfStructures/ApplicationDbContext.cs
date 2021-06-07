@@ -37,30 +37,7 @@ namespace AutoLot.Dal.EfStructures
 
             new MakeEntityConfiguration().Configure(modelBuilder.Entity<Make>());
 
-            modelBuilder.Entity<Order>(entity =>
-            {
-                entity.ToTable("Order");
-
-                entity.HasIndex(e => new { e.CustomerId, e.CarId }, "IX_FK_Customer_Order");
-
-                entity.HasIndex(e => e.CarId, "IX_FK_Inventory_Order");
-
-                entity.Property(e => e.TimeStamp)
-                    .IsRowVersion()
-                    .IsConcurrencyToken();
-
-                entity.HasOne(d => d.CarNavigation)
-                    .WithMany(p => p.Orders)
-                    .HasForeignKey(d => d.CarId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Inventory_Order");
-
-                entity.HasOne(d => d.CustomerNavigation)
-                    .WithMany(p => p.Orders)
-                    .HasForeignKey(d => d.CustomerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Customer_Order");
-            });
+            new OrderEntityConfiguration().Configure(modelBuilder.Entity<Order>());
 
             OnModelCreatingPartial(modelBuilder);
         }

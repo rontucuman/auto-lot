@@ -34,7 +34,7 @@ namespace AutoLot.Dal.EfStructures.Configurations
           .IsRequired()
           .IsUnicode(false);
 
-        ba.Property<string>(p => p.FullName)
+        ba.Property(p => p.FullName)
           .HasColumnName(nameof(Person.FullName))
           .HasComputedColumnSql("[LastName]+ ', ' + [FirstName]")
           .HasMaxLength(150);
