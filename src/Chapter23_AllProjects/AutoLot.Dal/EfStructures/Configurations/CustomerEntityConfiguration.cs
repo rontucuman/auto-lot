@@ -11,7 +11,7 @@ namespace AutoLot.Dal.EfStructures.Configurations
     {
       base.Configure(builder);
 
-      builder.ToTable("Customer");
+      builder.ToTable("Customer", "dbo");
 
       builder.OwnsOne(e => e.PersonalInformation, ba =>
       {

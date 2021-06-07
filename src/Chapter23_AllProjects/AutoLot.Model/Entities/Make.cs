@@ -1,21 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-
-#nullable disable
+using AutoLot.Model.Entities.Base;
 
 namespace AutoLot.Model.Entities
 {
-    public partial class Make
-    {
-        public Make()
-        {
-            Cars = new HashSet<Car>();
-        }
+  public partial class Make : BaseEntity
+  {
+    public string Name { get; set; } = "Ford";
 
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public byte[] TimeStamp { get; set; }
-
-        public virtual ICollection<Car> Cars { get; set; }
-    }
+    public virtual IEnumerable<Car> Cars { get; set; } = new List<Car>();
+  }
 }

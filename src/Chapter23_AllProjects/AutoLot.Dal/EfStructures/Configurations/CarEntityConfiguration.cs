@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace AutoLot.Dal.EfStructures.Configurations
 {
-  public class CarEntityConfiguration:BaseEntityConfiguration<Car>
+  public class CarEntityConfiguration : BaseEntityConfiguration<Car>
   {
     public override void Configure(EntityTypeBuilder<Car> builder)
     {
@@ -30,9 +30,9 @@ namespace AutoLot.Dal.EfStructures.Configurations
         .HasDefaultValue(true);
 
       builder.HasOne(d => d.MakeNavigation)
-        .WithMany(p => p.Cars)
+        .WithMany(p => p!.Cars)
         .HasForeignKey(d => d.MakeId)
-        .OnDelete(DeleteBehavior.ClientSetNull)
+        .OnDelete(DeleteBehavior.Restrict)
         .HasConstraintName("FK_Make_Inventory");
     }
   }
