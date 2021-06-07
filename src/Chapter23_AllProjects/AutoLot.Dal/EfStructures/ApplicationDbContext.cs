@@ -29,32 +29,7 @@ namespace AutoLot.Dal.EfStructures
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
 
-            modelBuilder.Entity<CreditRisk>(entity =>
-            {
-                entity.ToTable("CreditRisk");
-
-                entity.HasIndex(e => e.CustomerId, "IX_FK_Customer_CreditRisk");
-
-                entity.Property(e => e.FirstName)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.LastName)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TimeStamp)
-                    .IsRowVersion()
-                    .IsConcurrencyToken();
-
-                entity.HasOne(d => d.CustomerNavigation)
-                    .WithMany(p => p.CreditRisks)
-                    .HasForeignKey(d => d.CustomerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Customer_CreditRisk");
-            });
+            new CreditRiskEntityConfiguration().Configure(modelBuilder.Entity<CreditRisk>());
 
             new CustomerEntityConfiguration().Configure(modelBuilder.Entity<Customer>());
 
