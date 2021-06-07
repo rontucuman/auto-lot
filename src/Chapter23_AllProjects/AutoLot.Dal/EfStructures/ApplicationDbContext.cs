@@ -1,10 +1,6 @@
-﻿using System;
-using AutoLot.Dal.EfStructures.Configurations;
+﻿using AutoLot.Dal.EfStructures.Configurations;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 using AutoLot.Model.Entities;
-
-#nullable disable
 
 namespace AutoLot.Dal.EfStructures
 {
@@ -19,15 +15,18 @@ namespace AutoLot.Dal.EfStructures
         {
         }
 
-        public virtual DbSet<CreditRisk> CreditRisks { get; set; }
-        public virtual DbSet<Customer> Customers { get; set; }
-        public virtual DbSet<Car> Inventories { get; set; }
-        public virtual DbSet<Make> Makes { get; set; }
-        public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<SeriLogEntry>? LogEntries { get; set; }
+        public virtual DbSet<CreditRisk>? CreditRisks { get; set; }
+        public virtual DbSet<Customer>? Customers { get; set; }
+        public virtual DbSet<Car>? Inventories { get; set; }
+        public virtual DbSet<Make>? Makes { get; set; }
+        public virtual DbSet<Order>? Orders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
+
+            new SeriLogEntryEntityConfiguration().Configure(modelBuilder.Entity<SeriLogEntry>());
 
             new CreditRiskEntityConfiguration().Configure(modelBuilder.Entity<CreditRisk>());
 
