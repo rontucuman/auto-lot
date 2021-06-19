@@ -32,7 +32,7 @@ namespace AutoLot.Dal.EfStructures.Configurations
       builder.HasOne(d => d.MakeNavigation)
         .WithMany(p => p!.Cars)
         .HasForeignKey(d => d.MakeId)
-        .OnDelete(DeleteBehavior.Restrict)
+        .OnDelete(DeleteBehavior.ClientSetNull)
         .HasConstraintName("FK_Make_Inventory");
     }
   }

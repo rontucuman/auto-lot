@@ -4,14 +4,16 @@ using AutoLot.Dal.EfStructures;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AutoLot.Dal.EfStructures.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210607023310_EntitiesUpdated")]
+    partial class EntitiesUpdated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -214,6 +216,7 @@ namespace AutoLot.Dal.EfStructures.Migrations
                         .WithMany("Cars")
                         .HasForeignKey("MakeId")
                         .HasConstraintName("FK_Make_Inventory")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("MakeNavigation");

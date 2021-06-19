@@ -9,7 +9,7 @@ namespace AutoLot.Dal.EfStructures.Configurations
     public override void Configure(EntityTypeBuilder<Order> builder)
     {
       base.Configure(builder);
-
+      
       builder.ToTable("Order");
 
       builder.HasIndex(e => new { e.CustomerId, e.CarId }, "IX_FK_Customer_Order");
@@ -23,6 +23,8 @@ namespace AutoLot.Dal.EfStructures.Configurations
         .HasForeignKey(d => d.CarId)
         .OnDelete(DeleteBehavior.ClientSetNull)
         .HasConstraintName("FK_Inventory_Order");
+
+      builder.HasQueryFilter(e => e.CarNavigation!.IsDrivable);
 
       builder.HasOne(d => d.CustomerNavigation)
         .WithMany(p => p!.Orders)
