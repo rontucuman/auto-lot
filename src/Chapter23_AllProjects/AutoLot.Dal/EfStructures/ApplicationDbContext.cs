@@ -3,6 +3,7 @@ using AutoLot.Dal.EfStructures.Configurations;
 using AutoLot.Dal.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using AutoLot.Model.Entities;
+using AutoLot.Model.ViewModels;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage;
 
@@ -74,7 +75,12 @@ namespace AutoLot.Dal.EfStructures
 
     private void ChangeTrackerOnTracked(object? sender, EntityTrackedEventArgs e)
     {
-      throw new NotImplementedException();
+      string source = e.FromQuery ? "Database" : "Code";
+
+      if (e.Entry.Entity is Car c)
+      {
+        Console.WriteLine($"Car entry {c.PetName} was added from {source}");
+      }
     }
 
     public virtual DbSet<SeriLogEntry>? LogEntries { get; set; }
@@ -83,6 +89,8 @@ namespace AutoLot.Dal.EfStructures
     public virtual DbSet<Car>? Inventories { get; set; }
     public virtual DbSet<Make>? Makes { get; set; }
     public virtual DbSet<Order>? Orders { get; set; }
+
+    public virtual DbSet<CustomerOrderViewModel>? CustomerOrderViewModels { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -99,6 +107,8 @@ namespace AutoLot.Dal.EfStructures
       new MakeEntityConfiguration().Configure(modelBuilder.Entity<Make>());
 
       new OrderEntityConfiguration().Configure(modelBuilder.Entity<Order>());
+
+      new CustomerOrderViewModelConfiguration().Configure(modelBuilder.Entity<CustomerOrderViewModel>());
 
       OnModelCreatingPartial(modelBuilder);
     }
